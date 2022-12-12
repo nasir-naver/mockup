@@ -3,6 +3,8 @@
 PATH=$PATH:/usr/sbin
 export PATH
 
+
+
 deploy_home=/home/lendit/deploy/outsidebank
 current_push_port=$(cat /etc/nginx/conf.d/outsidebank*.conf | grep -o '127.0.0.1:[0-9]*' | sed 's/127\.0\.0\.1://g')
 
@@ -41,13 +43,14 @@ fi
 
 cp -r $deploy_home $target_src_dir
 
+echo $DEPLOYMENT_GROUP
 cd $target_src_dir
 source ../venv/bin/activate
 pip install -U -r requirements.txt
 
-OUTSIDEBANK_ENV=dev nohup python -m outsidebank.push $target_push_port > ../logs/push.log 2>&1 &
-OUTSIDEBANK_ENV=dev nohup python -m outsidebank.pull $target_pull_port > ../logs/pull.log 2>&1 &
-OUTSIDEBANK_ENV=dev nohup python -m outsidebank.payment_monitor > ../logs/payment_monitor.log 2>&1 &
+OUTSIDEBANK_ENV=$DEPLOYMENT_GROUP nohup python -m outsidebank.push $target_push_port > ../logs/push.log 2>&1 &
+OUTSIDEBANK_ENV=$DEPLOYMENT_GROUP nohup python -m outsidebank.pull $target_pull_port > ../logs/pull.log 2>&1 &
+OUTSIDEBANK_ENV=$DEPLOYMENT_GROUP nohup python -m outsidebank.payment_monitor > ../logs/payment_monitor.log 2>&1 &
 
 echo 'wait and check ports'
 sleep 3
