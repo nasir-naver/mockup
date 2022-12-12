@@ -3,7 +3,7 @@
 PATH=$PATH:/usr/sbin
 export PATH
 
-
+echo $DEPLOYMENT_GROUP
 
 deploy_home=/home/lendit/deploy/outsidebank
 current_push_port=$(cat /etc/nginx/conf.d/outsidebank*.conf | grep -o '127.0.0.1:[0-9]*' | sed 's/127\.0\.0\.1://g')
