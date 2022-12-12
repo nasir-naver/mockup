@@ -3,10 +3,10 @@
 PATH=$PATH:/usr/sbin
 export PATH
 
-sudo useradd lendit
-mkdir -p /home/lendit/deploy/outsidebank
-mkdir -p /home/outsidebank1/src
-mkdir -p /home/outsidebank2/src
+# sudo useradd lendit
+# sudo mkdir -p /home/lendit/deploy/outsidebank
+# sudo mkdir -p /home/outsidebank1/src
+# sudo mkdir -p /home/outsidebank2/src
 
 deploy_home=/home/lendit/deploy/outsidebank
 current_push_port=$(cat /etc/nginx/conf.d/outsidebank*.conf | grep -o '127.0.0.1:[0-9]*' | sed 's/127\.0\.0\.1://g')
