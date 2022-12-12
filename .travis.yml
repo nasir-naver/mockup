@@ -30,7 +30,6 @@ deploy:
     <<: *aws_s3
     on: &on_seoul
       all_branches: true
-      condition: $TRIGGER_DEPLOYMENT = true
   - provider: codedeploy
     <<: *aws_seoul
     <<: *aws_deploy
