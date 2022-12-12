@@ -3,8 +3,13 @@
 PATH=$PATH:/usr/sbin
 export PATH
 DEPLOYMENT_GROUP=$DEPLOYMENT_GROUP
+RND = 22
+RNDD = "3423"
 
 echo $DEPLOYMENT_GROUP
+echo 'test'
+echo $RND
+echo $RNDD
 
 deploy_home=/home/lendit/deploy/outsidebank
 current_push_port=$(cat /etc/nginx/conf.d/outsidebank*.conf | grep -o '127.0.0.1:[0-9]*' | sed 's/127\.0\.0\.1://g')
