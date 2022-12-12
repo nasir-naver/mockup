@@ -1,0 +1,36 @@
+language: python
+python:
+  - 3.6
+
+install:
+  - pip install -r requirements.txt
+script:
+  - flake8 .
+  - pytest outsidebank/tests/  --cov
+before_deploy:
+  - deploy/before_deploy.sh
+
+aws_seoul: &aws_seoul
+  bucket: nasirbucket4342
+  region: ap-northeast-2
+aws_s3: &aws_s3
+  local_dir: ../lendit_upload
+  upload-dir: lendit-outsidebank
+  skip_cleanup: true
+aws_deploy: &aws_deploy
+  key: lendit-outsidebank/lendit-outsidebank-$DEPLOYMENT_GROUP-${TRAVIS_COMMIT:0:7}.zip
+  bundle_type: zip
+  application: cicd-test
+  deployment_group: $DEPLOYMENT_GROUP
+
+deploy:
+  - provider: s3
+    <<: *aws_seoul
+    <<: *aws_s3
+    on: &on_seoul
+      all_branches: true
+      condition: $TRIGGER_DEPLOYMENT = true
+  - provider: codedeploy
+    <<: *aws_seoul
+    <<: *aws_deploy
+    on: *on_seoul

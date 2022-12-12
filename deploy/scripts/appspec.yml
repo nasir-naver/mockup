@@ -1,0 +1,17 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/lendit/deploy/outsidebank
+permissions:
+  - object: /home/lendit/deploy
+    pattern: "**"
+    owner: lendit
+    group: lendit
+hooks:
+  ApplicationStart:
+    - location: restart.sh
+      runas: lendit
+  ValidateService:
+    - location: validate.sh
+      runas: lendit
